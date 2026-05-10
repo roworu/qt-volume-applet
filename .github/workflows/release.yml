@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y \
+            libpulse-dev \
+            libxcb-cursor0 \
+            libxcb-xinerama0 \
+            libglib2.0-0
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Build binary
+        run: uv run --with pyinstaller pyinstaller --onefile --noconsole --name qt-volume-applet main.py
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/qt-volume-applet

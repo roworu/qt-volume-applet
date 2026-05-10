@@ -1,0 +1,9 @@
+[project]
+name = "qt-volume-applet"
+version = "0.0.1"
+description = "simple volume applet to use in WMs made with QT"
+readme = "README.md"
+dependencies = [
+    "PyQt6==6.11.0",
+    "pulsectl==24.12.0"
+]
